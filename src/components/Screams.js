@@ -10,18 +10,20 @@ import dayjs from 'dayjs';
 import relativeTime from 'dayjs/plugin/relativeTime';
 import Proptypes from 'prop-types';
 import ToolTipButton from '../util/TooltipButton';
+import Swal from 'sweetalert2'
 
 //icons
-import ThumbUp from '@material-ui/icons/ThumbUp';
 import ChatICon from '@material-ui/icons/Chat';
 import EmojiObjectsIcon from '@material-ui/icons/EmojiObjects';
+import DeleteOutlineIcon from '@material-ui/icons/DeleteOutline';
 //redux 
 import {connect} from 'react-redux';
-import {LikeScream, UnLikeScream} from '../redux/actions/dataActions';
+import {LikeScream, UnLikeScream, DeleteScream} from '../redux/actions/dataActions';
 
 
 
-const styles = {
+const styles = (theme) => ({
+    ...theme.additional,
     card: {
         display: 'flex',
         marginBottom:20
@@ -44,9 +46,17 @@ const styles = {
         '& span' :{
             fontSize :'0.8rem',
         },
+    },
+    deleteArea : {
+        flex:1,
+        position:'relative'
+    },
+    deleteButton : {
+        position: 'absolute',
+        right: 0
     }
 }
-
+)
 const Screams = (props) => {
     console.log(props)
     const {
@@ -56,19 +66,54 @@ const Screams = (props) => {
         },
         user:{
             authenticated,
-            likes
+            likes,
+            credentials:{handle}
         },
         LikeScream,
-        UnLikeScream
+        UnLikeScream,
+        DeleteScream
     } = props;
-
-    let screamIsLiked = likes && likes.find(like=> like.screamId == screamId);
+    //is liked
+    let screamIsLiked = likes && likes.find(like=> like.screamId === screamId);
+    // is user the owner 
+    let owner = handle === userHandle;
     const handleLike = () => {
         LikeScream(screamId);
     }
     const handleUnlike = () => {
         UnLikeScream(screamId)
     }   
+
+    const handleDelete = async () => {
+        console.log(classes)
+        const dismiss = await Swal.fire({
+            title: 'Are you sure?',
+            text: "You won't be able to revert this!",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Yes, delete it!'
+          })
+          console.log(dismiss)
+        if (dismiss.value) {
+            const deleting = await DeleteScream(screamId);
+            if (deleting.resolved) {
+                Swal.fire(
+                    'Deleted!',
+                    'Your idea has been deleted.',
+                    'success'
+                  )
+            } else {
+                Swal.fire(
+                    'OOPS!',
+                    'Something went wrong, please try it later',
+                    'error'
+                  )
+            }
+             
+            }
+    }
     
     let actionIcon = !authenticated? 
         (
@@ -108,13 +153,22 @@ const Screams = (props) => {
     <div className={classes.actionMenu}>
         {actionIcon}
         <span> {likesCount} likes</span>
-        <ToolTipButton toolTitle="comments">
+        <ToolTipButton toolTitle="comment">
             <ChatICon color="primary"/>
         </ToolTipButton>
         <span>{commentCount} comments</span>
         </div>
+
       </CardActions>
-      </div>
+    </div>
+    {owner &&( 
+        <div className={classes.deleteArea}>
+        <ToolTipButton toolTitle="Delete" onClick={handleDelete}
+        btnClassName={classes.deleteButton}>
+            <DeleteOutlineIcon color="secondary"/>
+        </ToolTipButton>
+        </div>
+    )}
 </Card>
     )
 }
@@ -123,6 +177,7 @@ Screams.prototypes = {
     classes: Proptypes.object.isRequired,
     LikeScream: Proptypes.func.isRequired, 
     UnLikeScream: Proptypes.func.isRequired,
+    DeleteScream: Proptypes.func.isRequired,
     user: Proptypes.object.isRequired,
     scream: Proptypes.object.isRequired
 }
@@ -133,7 +188,8 @@ const mapStateToProps = (store) => ({
 
 const mapActionsToProps = {
     LikeScream,
-    UnLikeScream
+    UnLikeScream,
+    DeleteScream
 }
 
 export default connect(mapStateToProps, mapActionsToProps)(withStyles(styles)(Screams));
