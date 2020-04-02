@@ -33,7 +33,7 @@ const Profile = (props) => {
         user:{
             authenticated, 
             loading, 
-            credentials:{createdAt, location, website, handle, userId, email, bio, imageUrl}},
+            credentials:{createdAt, location, website, handle, bio, imageUrl}},
         uploadImage,
         logoutUser
     } = props;

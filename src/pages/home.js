@@ -15,7 +15,6 @@ const Home = (props) => {
          getScreams();
     },[])
 
-    console.log(screams)
     let loadedScreams = !loading ? screams.map(scream => <Screams key={scream.screamId} scream={scream}/> ):'loading...';
     return (
         

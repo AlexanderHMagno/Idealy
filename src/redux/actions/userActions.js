@@ -66,7 +66,6 @@ export const getUserData = () => async (dispatch) => {
 
 }
 
-
 export const editUserDetails = (userDetails) => async (dispatch) => {
     dispatch({type:LOADING_USER});
     await axios.post('/user/updateInfo', userDetails);

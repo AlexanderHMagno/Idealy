@@ -33,7 +33,7 @@ if (token) {
     console.log('running')
     store.dispatch({type: SET_AUTHENTICATED})
     // authenticated = true;
-    //this line is super import because will hold the connection to
+    //this line is super import because will hold the connection to axios and keep the token available
     axios.defaults.headers.common.Authorization = token;
     store.dispatch(getUserData());
     

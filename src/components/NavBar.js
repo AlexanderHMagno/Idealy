@@ -2,23 +2,43 @@ import React from 'react';
 import Proptypes from 'prop-types';
 import ToolTipButton from '../util/TooltipButton';
 import {Link} from 'react-router-dom';
+import PostIdea from './PostIdea';
+import logo from '../images/flaticon.png';
 
 //MUI stuff
 import AppBar from '@material-ui/core/AppBar';
 import ToolBar from '@material-ui/core/ToolBar';
 import Button from '@material-ui/core/Button';
-import AddIcon from '@material-ui/icons/Add';
+import withStyles from '@material-ui/core/styles/withStyles';
+//icons
 import HomeIcon from '@material-ui/icons/Home';
 import NotificationsIcon from '@material-ui/icons/Notifications';
+import KeyBoardReturn from '@material-ui/icons/KeyboardReturn';
+
+
 
 //redux 
 import {connect} from 'react-redux';
-const NavBar = ({auth}) => {
+import {logoutUser} from '../redux/actions/userActions';
 
+const styles = () => ({
+    image: {
+        position: 'absolute',
+        left: '5%',
+        top: '10%',
+        height: '80%'
+    }
+})
+const NavBar = ({auth, logoutUser, classes}) => {
+    const handleLogout = () => {
+        logoutUser()
+    }
     return (
         <div>
             <AppBar>
+            <img className={classes.image} src={logo} alt="logo"/>
             <ToolBar className="nav-container">
+                
                 {!auth &&  
                 <>
                 <Button color="inherit" component={Link} to ="/login">
@@ -35,9 +55,7 @@ const NavBar = ({auth}) => {
                 {auth &&  
                 <>
 
-                <ToolTipButton toolTitle="Post an Idea">
-                    <AddIcon></AddIcon>
-                </ToolTipButton>
+                <PostIdea/>
                 <Link to="/">
                 <ToolTipButton toolTitle="Home">
                     <HomeIcon></HomeIcon>
@@ -47,6 +65,9 @@ const NavBar = ({auth}) => {
                 <ToolTipButton toolTitle="Notifications">
                     <NotificationsIcon></NotificationsIcon>
                 </ToolTipButton>
+                <ToolTipButton toolTitle={'Logout'} onClick={handleLogout}>
+                    <KeyBoardReturn color="primary"/>
+                </ToolTipButton>  
                 </> 
                 }
                
@@ -65,4 +86,5 @@ const mapStateToProps = (store) => ({
     auth  : store.user.authenticated 
 })
 
-export default connect(mapStateToProps)(NavBar)
+
+export default connect(mapStateToProps, {logoutUser})(withStyles(styles)(NavBar));

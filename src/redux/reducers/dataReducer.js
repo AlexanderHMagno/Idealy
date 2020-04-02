@@ -1,9 +1,9 @@
-import {SET_SCREAMS, LOADING_DATA, LIKE_SCREAM, UNLIKE_SCREAM, DELETE_SCREAM} from '../types';
+import {SET_SCREAMS, LOADING_DATA, LIKE_SCREAM, UNLIKE_SCREAM, DELETE_SCREAM, POST_SCREAM,SET_SCREAM} from '../types';
 
 const initialState = {
     loading : false,
     screams : [],
-    scream: {}
+    scream: {screamInfo:{}, comments:[]}
 }
 
 
@@ -20,6 +20,12 @@ export default function (state = initialState, action) {
                 loading:false,
                 screams: action.payload
             } ;
+        case SET_SCREAM:
+            return {
+                ...state,
+                loading:false,
+                scream: action.payload
+            } ;
         case LIKE_SCREAM:
         case UNLIKE_SCREAM:
             //search the scream and update the index
@@ -31,6 +37,11 @@ export default function (state = initialState, action) {
             return {
                 ...state,
                 screams : newScreams
+            }
+        case POST_SCREAM: 
+            return {
+                ...state,
+                screams : [action.payload,...state.screams]
             }
         default:
             return state;
