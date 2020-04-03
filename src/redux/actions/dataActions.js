@@ -20,6 +20,26 @@ export const getScreams = () => async (dispatch) => {
     }
 }
 
+
+export const getUsersScreams = (handle) => async (dispatch) => {
+    try {
+        dispatch({type:LOADING_DATA});
+        const data = await axios.get(`/user/${handle}`);
+
+        console.log(data)
+        dispatch({
+            type:SET_SCREAMS,
+            payload: data.data.userInfo.screams
+        })
+        return {monkeyCredentials:data.data.userInfo.credentials}
+    } catch (err) {console.log(err)
+        dispatch({
+            type:SET_SCREAMS,
+            payload:[]
+        })
+    }
+}
+
 export const getScream = (screamId) => async (dispatch) => {
     try {
         dispatch({type:LOADING_UI});
@@ -33,6 +53,9 @@ export const getScream = (screamId) => async (dispatch) => {
         console.log(error)
     }
 }
+
+
+
 
 export const LikeScream = (screamId) => async (dispatch) => {
     try {

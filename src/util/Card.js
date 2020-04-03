@@ -125,7 +125,7 @@ const CardIdea = ( props ) => {
     {classes.image}/>
     <div className={classes.subCard}>
     <CardContent className={classes.content}>
-        <Typography variant="h5" component={Link} to={`/users/${userHandle}`} color="primary" >
+        <Typography variant="h5" component={Link} to={`/user/${userHandle}`} color="primary" >
         {userHandle}
         </Typography>
         <Typography variant="body2" color="textSecondary" >

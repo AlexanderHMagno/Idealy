@@ -32,7 +32,7 @@ const Comments = (props) => {
     const {data:{imageUrl, userHandle, createdAt, body}, classes, title} = props;
     return (
         <div className={classes.Comments}>
-            <Avatar src={imageUrl||logo} className={classes.avatar}/>
+            <Avatar src={imageUrl||logo} className={classes.avatar} component={Link} to ={`/user/${userHandle}`}/>
             <div className={classes.infoComments}>
             <Typography variant="h6" color="primary">
                     {title}

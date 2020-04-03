@@ -1,9 +1,7 @@
-import React, {useRef} from 'react';
+import React from 'react';
 import Proptypes from 'prop-types';
 import {Link} from 'react-router-dom';
 import dayJs from 'dayjs';
-import EditDetails from './EditDetails.js';
-import TooltipButton from '../../util/TooltipButton';
 
 //redux
 import {connect} from 'react-redux';
@@ -18,8 +16,7 @@ import InsertInvitationIcon from '@material-ui/icons/InsertInvitation';
 import MuiLink from '@material-ui/core/Link';
 import Typography from '@material-ui/core/Typography';
 import Button from '@material-ui/core/Button';
-import EditIcon from '@material-ui/icons/Edit';
-import KeyBoardReturn from '@material-ui/icons/KeyboardReturn';
+
 
 
 const styles = (theme)=> ({
@@ -27,33 +24,17 @@ const styles = (theme)=> ({
   
 })
 
-const Profile = (props) => {
+const staticProfile = (props) => {
     const {
         classes,
+        credentials:{monkeyCredentials},
         user:{
             authenticated, 
-            loading, 
-            credentials:{createdAt, location, website, handle, bio, imageUrl}},
-        uploadImage,
-        logoutUser
+            },
     } = props;
-
-    const handleImageChange = (event) => {
-        const image = event.target.files[0];
-        const formData = new FormData();
-        formData.append('image',image,image.name);
-        uploadImage(formData);
-    }
-    const element = useRef();
-    const handleTriggerImage = () => {
-        element.current.click();
-    }
-
-    const handleLogout = () => {
-        logoutUser();
-    }
     
-    if (loading) return <p>...loading this</p>;
+    if (!monkeyCredentials) return <p>...loading this</p>;
+    const {createdAt, location, website, handle, bio, imageUrl} = monkeyCredentials;
     if (!authenticated) {
         return (
             <Paper className={classes.paper}>
@@ -89,11 +70,6 @@ const Profile = (props) => {
             <div className={classes.profile}>
                 <div className="image-wrapper">
                     <img src={imageUrl} className="profile-image" alt="profile"/> 
-                    <input type="file" id="imageInput" hidden="hidden" ref={element} onChange={handleImageChange}/> 
-
-                <TooltipButton toolTitle={'Edit picture'} onClick={handleTriggerImage} btnClassName={'button'}>
-                <EditIcon color="primary"/>
-                </TooltipButton>     
                 </div>
                 <hr/>
                 <div className="profile-details">
@@ -128,19 +104,13 @@ const Profile = (props) => {
                         <span>Joined {dayJs(createdAt).format("MMM YYYY")}</span>
                         <hr/>
                     </>}
-                <div>
-                <TooltipButton toolTitle={'Logout'} onClick={handleLogout}>
-                    <KeyBoardReturn color="primary"/>
-                </TooltipButton>   
-                <EditDetails></EditDetails>
-                </div>
                 </div>
             </div>
         </Paper>
     )
 };
 
-Profile.prototype = {
+staticProfile.prototype = {
     user: Proptypes.object.isRequired,
     classes: Proptypes.object.isRequired,
     uploadImage: Proptypes.func.isRequired,
@@ -155,4 +125,4 @@ const mapDispatchToProps = {
     uploadImage, logoutUser
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(withStyles(styles)(Profile)) ;
+export default connect(mapStateToProps, mapDispatchToProps)(withStyles(styles)(staticProfile)) ;

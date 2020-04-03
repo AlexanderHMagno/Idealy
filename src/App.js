@@ -5,6 +5,7 @@ import NavBar from './components/layout/NavBar';
 import home from './pages/home';
 import login from './pages/login';
 import signup from './pages/signUp';
+import user from './pages/user';
 import themeUtil from './util/theme';
 import jwsDecode from 'jwt-decode';
 import './App.css';
@@ -51,6 +52,7 @@ function App() {
               <Route path="/" component={home} exact/>
               <AuthRoute path="/login" component={login} />
               <AuthRoute path="/signup" component={signup} />
+              <Route path="/user/:handle" component={user} exact/>
             </Switch>
           </div>
         </Router>

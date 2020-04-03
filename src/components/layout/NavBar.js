@@ -15,6 +15,7 @@ import ToolTips from '@material-ui/core/Tooltip'
 import HomeIcon from '@material-ui/icons/Home';
 import NotificationsIcon from '@material-ui/icons/Notifications';
 import KeyBoardReturn from '@material-ui/icons/KeyboardReturn';
+import AssignmentIndIcon from '@material-ui/icons/AssignmentInd';
 
 
 
@@ -30,7 +31,9 @@ const styles = () => ({
         height: '80%'
     }
 })
-const NavBar = ({auth, logoutUser, classes}) => {
+const NavBar = ({user, logoutUser, classes}) => {
+
+    const {authenticated ,credentials :{handle}} = user
     const handleLogout = () => {
         logoutUser()
     }
@@ -43,7 +46,7 @@ const NavBar = ({auth, logoutUser, classes}) => {
             
             <ToolBar className="nav-container">
                 
-                {!auth &&  
+                {!authenticated &&  
                 <>
                 <Button color="inherit" component={Link} to ="/login">
                     Login
@@ -56,10 +59,15 @@ const NavBar = ({auth, logoutUser, classes}) => {
                 </Button>
                 </> 
                 }
-                {auth &&  
+                {authenticated &&  
                 <>
 
                 <PostIdea/>
+                <Link to={`/user/${handle}`}>
+                <ToolTipButton toolTitle="My Ideas">
+                    <AssignmentIndIcon></AssignmentIndIcon>
+                </ToolTipButton>
+                </Link>
                 <Link to="/">
                 <ToolTipButton toolTitle="Home">
                     <HomeIcon></HomeIcon>
@@ -83,11 +91,11 @@ const NavBar = ({auth, logoutUser, classes}) => {
 }
 
 NavBar.prototypes = {
-    auth : Proptypes.func.isRequired
+    user : Proptypes.func.isRequired
 }
 
 const mapStateToProps = (store) => ({
-    auth  : store.user.authenticated 
+    user  : store.user
 })
 
 
