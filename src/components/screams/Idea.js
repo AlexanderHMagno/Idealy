@@ -1,6 +1,6 @@
 import React from 'react';
 import Proptypes from 'prop-types';
-import CardIcon from '../util/Card';
+import CardIcon from '../../util/Card';
 import CommentsGroup from './Comments';
 //mui
 import Button from '@material-ui/core/Button';
@@ -12,12 +12,12 @@ import DialogTitle from '@material-ui/core/DialogTitle';
 import  withStyles  from '@material-ui/core/styles/withStyles';
 import CircularProgress from '@material-ui/core/CircularProgress';
 //icons
-import ToolTipButton from '../util/TooltipButton';
+import ToolTipButton from '../../util/TooltipButton';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 
 //redux
 import {connect} from 'react-redux';
-import {getScream} from '../redux/actions/dataActions';
+import {getScream} from '../../redux/actions/dataActions';
 
 
 const styles = (theme) => ({
@@ -28,10 +28,6 @@ const styles = (theme) => ({
     commentLoader :{
         left: '45%',
         position: 'absolute',
-    },
-    fixedScream: {
-        position: 'sticky',
-        top: 0,
     }
 })
 
@@ -50,7 +46,7 @@ const IdeaScream = (props) => {
   };
  
   const descriptionElementRef = React.useRef(null);
-  console.log(comments, loading)
+ 
   React.useEffect(() => {
       
     if (open) {
@@ -67,7 +63,7 @@ const IdeaScream = (props) => {
   if (!loadedComments.length && !loading) loadedComments = <CommentsGroup title='Ideally' data={{body:'Be the first one to comment on this idea'}}/>
   return (
     <div>
-      <ToolTipButton toolTitle="expand" onClick={handleClickOpen}>
+      <ToolTipButton toolTitle="Expand" onClick={handleClickOpen}>
             <ExpandMoreIcon color="primary"/>
         </ToolTipButton>
       <Dialog
@@ -79,7 +75,7 @@ const IdeaScream = (props) => {
         fullWidth={true}  
       >
         <DialogTitle id="scroll-dialog-title">
-            <CardIcon scream={scream} actionIcon={actionIcon} staticCard={classes.fixedScream}
+            <CardIcon scream={scream} actionIcon={actionIcon} authenticated={true}
             componentIdea = {
                 <ToolTipButton toolTitle="close" onClick={handleClose}>
                     <ExpandMoreIcon color="secondary"/>

@@ -1,7 +1,7 @@
 import React, {useEffect } from 'react';
 import Grid from '@material-ui/core/Grid';
-import Screams from '../components/Screams';
-import Profile from '../components/Profile';
+import Screams from '../components/screams/Screams';
+import Profile from '../components/profile/Profile';
 
 import Proptypes from 'prop-types';
 

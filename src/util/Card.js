@@ -10,12 +10,22 @@ import Typography from '@material-ui/core/Typography';
 import ChatICon from '@material-ui/icons/Chat';
 import dayjs from 'dayjs';
 import relativeTime from 'dayjs/plugin/relativeTime';
+import Swal from 'sweetalert2';
+import logo from '../images/flaticon.png';
+
+import {connect} from 'react-redux';
+import {addNewComment} from '../redux/actions/dataActions';
+
 
 
 const styles = () => ({
     card: {
         display: 'flex',
+        justifyContent: 'space-between',
         marginBottom:20
+    },
+    cardInformation: {
+        display: 'flex'
     },
     subCard: {
         display: 'flex',
@@ -48,16 +58,69 @@ const styles = () => ({
 const CardIdea = ( props ) => {
     const {
         classes,
-        staticCard,
-        scream:{imageUrl,userHandle,createdAt,body, likesCount, commentCount},
+        scream:{imageUrl,userHandle,createdAt,body, likesCount, commentCount,screamId},
         actionIcon,
         componentIdea,
+        addNewComment,
+        authenticated,
     children} = props;
-
+    
+    const handleNewComment = async () => {
+        try {
+            let modal = document.getElementsByClassName('MuiDialog-scrollPaper')[0];
+            if (modal) {
+                modal.removeAttribute('tabindex')
+            }
+            
+            const { value: text } = await Swal.fire({
+                title:`<span><img class='postImageTitle' src=${logo} alt="logo"/> Add a Comment</span>`,
+                input: 'textarea',
+                inputPlaceholder: 'Type your comment here...',
+                inputAttributes: {
+                  'aria-label': 'Type your comment here'
+                },
+                inputAutoTrim:true,
+                showCancelButton: true,
+                inputValidator: (value) => {
+                    return new Promise((resolve) => {
+                      if (value) {
+                        resolve()
+                      } else {
+                        resolve('Please add a comment')
+                      }
+                    })
+                  }
+              })
+              if (text) {
+                addNewComment({screamId, body: text});
+                const Toast = Swal.mixin({
+                    toast: true,
+                    position: 'top-end',
+                    customClass: {container: 'topInformation'},
+                    showConfirmButton: false,
+                    timer: 3000,
+                    timerProgressBar: true,
+                    onOpen: (toast) => {
+                      toast.addEventListener('mouseenter', Swal.stopTimer)
+                      toast.addEventListener('mouseleave', Swal.resumeTimer)
+                    }
+                  })
+                  
+                  Toast.fire({
+                    icon: 'success',
+                    title: 'Adding'
+                  })
+              }
+        } catch (err) {
+            console.log(err)
+        }
+        // addNewComment(screamId);
+    }
     dayjs.extend(relativeTime)
     
 
-    return (<Card className={[classes.card, staticCard]}>
+    return (<Card className={classes.card}>
+    <div className={classes.cardInformation}>
     <CardMedia image={imageUrl} title={`${userHandle} image`} className=
     {classes.image}/>
     <div className={classes.subCard}>
@@ -76,17 +139,27 @@ const CardIdea = ( props ) => {
     <div className={classes.actionMenu}>
         {actionIcon}
         <span> {likesCount} likes</span>
-        <ToolTipButton toolTitle="comment">
+        {authenticated &&
+        <ToolTipButton toolTitle="comment" onClick= {handleNewComment}>
             <ChatICon color="primary"/>
         </ToolTipButton>
+        }
+        {!authenticated && 
+            <Link to ='/login'>
+                <ToolTipButton toolTitle="comment">
+                    <ChatICon color="primary"/>
+                </ToolTipButton>
+            </Link>
+        }   
         <span>{commentCount} comments</span>
         {componentIdea}
     </div>
 
       </CardActions>
     </div>
+    </div>
     {children}
 </Card>)}
 
 
-export default withStyles(styles)(CardIdea);
+export default connect(null, {addNewComment})(withStyles(styles)(CardIdea));

@@ -2,10 +2,10 @@ import React from 'react';
 import withStyles from '@material-ui/core/styles/withStyles';
 import {Link} from 'react-router-dom';
 import Proptypes from 'prop-types';
-import ToolTipButton from '../util/TooltipButton';
+import ToolTipButton from '../../util/TooltipButton';
 import Swal from 'sweetalert2';
 import Idea from './Idea';
-import CardIdea from '../util/Card';
+import CardIdea from '../../util/Card';
 
 //icons
 import EmojiObjectsIcon from '@material-ui/icons/EmojiObjects';
@@ -13,7 +13,7 @@ import DeleteOutlineIcon from '@material-ui/icons/DeleteOutline';
 
 //redux 
 import {connect} from 'react-redux';
-import {LikeScream, UnLikeScream, DeleteScream} from '../redux/actions/dataActions';
+import {LikeScream, UnLikeScream, DeleteScream} from '../../redux/actions/dataActions';
 
 
 
@@ -95,7 +95,8 @@ const Screams = (props) => {
     
         <CardIdea 
         scream={props.scream} 
-        actionIcon={actionIcon} 
+        actionIcon={actionIcon}
+        authenticated ={authenticated}
         componentIdea={
             menuComments} 
         >

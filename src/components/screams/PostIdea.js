@@ -1,25 +1,33 @@
 import React from 'react';
 import Proptypes from 'prop-types';
 import Swal from 'sweetalert2';
+import logo from '../../images/flaticon.png';
 //Mui
-import ToolTipButton from '../util/TooltipButton';
+import ToolTipButton from '../../util/TooltipButton';
 import withStyles from '@material-ui/core/styles/withStyles';
 //icons 
 import EmojiObjectsIcon from '@material-ui/icons/EmojiObjects';
 //redux 
 import {connect} from 'react-redux';
-import {postScream} from '../redux/actions/dataActions';
+import {postScream} from '../../redux/actions/dataActions';
 
 
 const styles = (theme) => ({
-    ...theme.additional
+    ...theme.additional,
+    '.postImageTitle': {
+      position: 'absolute',
+      left: '5%',
+      top: '10%',
+      height: '80%'
+  }
+
 })
 const PostIdea = (props) => {
     const {postScream} = props;
     const postForm = async () => {
         try {
             const { value: text } = await Swal.fire({
-                title:'Post an Idea',
+                title:`<span><img class='postImageTitle' src=${logo} alt="logo"/> Add an idea</span>`,
                 input: 'textarea',
                 inputPlaceholder: 'Type your idea here...',
                 inputAttributes: {

@@ -18,6 +18,17 @@ body {
 .nav-container svg {
   color: #fff
 }
+.postImageTitle {
+  height: 25px;
+}
 a {
   text-decoration: none;
+}
+
+.topInformation {
+  z-index: 9998;
+}
+
+.swal2-container {
+  z-index: 1500;
 }

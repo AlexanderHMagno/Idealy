@@ -2,6 +2,7 @@ import React from 'react';
 import dayjs from 'dayjs';
 import relativeTime from 'dayjs/plugin/relativeTime';
 import {Link} from 'react-router-dom';
+import logo from '../../images/flaticon.png';
 
 //mui
 import withStyles from '@material-ui/core/styles/withStyles';
@@ -28,10 +29,10 @@ const styles = (theme) => ({
 
 const Comments = (props) => {
     dayjs.extend(relativeTime)
-    const {data:{imageUrl, userHandle, createdAt, body, screamId}, classes, title} = props;
+    const {data:{imageUrl, userHandle, createdAt, body}, classes, title} = props;
     return (
         <div className={classes.Comments}>
-            <Avatar src={imageUrl} className={classes.avatar}/>
+            <Avatar src={imageUrl||logo} className={classes.avatar}/>
             <div className={classes.infoComments}>
             <Typography variant="h6" color="primary">
                     {title}

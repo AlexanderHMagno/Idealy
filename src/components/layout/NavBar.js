@@ -1,15 +1,16 @@
 import React from 'react';
 import Proptypes from 'prop-types';
-import ToolTipButton from '../util/TooltipButton';
+import ToolTipButton from '../../util/TooltipButton';
 import {Link} from 'react-router-dom';
-import PostIdea from './PostIdea';
-import logo from '../images/flaticon.png';
+import PostIdea from '../screams/PostIdea';
+import logo from '../../images/flaticon.png';
 
 //MUI stuff
 import AppBar from '@material-ui/core/AppBar';
 import ToolBar from '@material-ui/core/ToolBar';
 import Button from '@material-ui/core/Button';
 import withStyles from '@material-ui/core/styles/withStyles';
+import ToolTips from '@material-ui/core/Tooltip'
 //icons
 import HomeIcon from '@material-ui/icons/Home';
 import NotificationsIcon from '@material-ui/icons/Notifications';
@@ -19,7 +20,7 @@ import KeyBoardReturn from '@material-ui/icons/KeyboardReturn';
 
 //redux 
 import {connect} from 'react-redux';
-import {logoutUser} from '../redux/actions/userActions';
+import {logoutUser} from '../../redux/actions/userActions';
 
 const styles = () => ({
     image: {
@@ -36,7 +37,10 @@ const NavBar = ({auth, logoutUser, classes}) => {
     return (
         <div>
             <AppBar>
-            <img className={classes.image} src={logo} alt="logo"/>
+            <ToolTips title="Ideally">
+                <img className={classes.image} src={logo} alt="logo"/>
+            </ToolTips>
+            
             <ToolBar className="nav-container">
                 
                 {!auth &&  

@@ -2,8 +2,8 @@ import React, {useState} from 'react';
 import Proptypes from 'prop-types';
 import withStyles from '@material-ui/core/styles/withStyles';
 import {connect} from 'react-redux';
-import {editUserDetails} from '../redux/actions/userActions';
-import ToolTipButton from '../util/TooltipButton';
+import {editUserDetails} from '../../redux/actions/userActions';
+import ToolTipButton from '../../util/TooltipButton';
 
 //dialog 
 import Button from '@material-ui/core/Button';

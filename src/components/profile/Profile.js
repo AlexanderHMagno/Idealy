@@ -3,11 +3,11 @@ import Proptypes from 'prop-types';
 import {Link} from 'react-router-dom';
 import dayJs from 'dayjs';
 import EditDetails from './EditDetails.js';
-import TooltipButton from '../util/TooltipButton';
+import TooltipButton from '../../util/TooltipButton';
 
 //redux
 import {connect} from 'react-redux';
-import {uploadImage,logoutUser} from '../redux/actions/userActions';
+import {uploadImage,logoutUser} from '../../redux/actions/userActions';
 
 //mui stuff
 import withStyles from '@material-ui/core/styles/withStyles';
@@ -40,8 +40,10 @@ const Profile = (props) => {
 
     const handleImageChange = (event) => {
         const image = event.target.files[0];
+        console.log(image)
         const formData = new FormData();
         formData.append('image',image,image.name);
+        console.log(formData)
         uploadImage(formData);
     }
     const element = useRef();
