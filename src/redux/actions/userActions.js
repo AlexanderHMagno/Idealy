@@ -1,4 +1,5 @@
-import {SET_USER, SET_ERRORS, CLEAR_ERRORS, LOADING_UI, SET_UNAUTHENTICATED, LOADING_USER} from '../types';
+import {SET_USER, SET_ERRORS, CLEAR_ERRORS, LOADING_UI, SET_UNAUTHENTICATED, LOADING_USER,
+    MARK_NOTIFICATIONS} from '../types';
 import axios from 'axios';
 
 
@@ -75,6 +76,20 @@ const setAuthorizationToken = (token) => {
     const FBIdToken = `Bearer ${token}`;
     localStorage.setItem('FBauthToken', FBIdToken)
     axios.defaults.headers.common['Authorization'] = FBIdToken;
+}
+
+export const markNotificationAsRead = (notifications) => async(dispatch) => {
+    //notifications []
+    console.log(notifications)
+    try {
+        await axios.post('/notifications', notifications);
+        dispatch({
+            type: MARK_NOTIFICATIONS,
+            payload: notifications
+        })
+    } catch (error) {
+        console.log(error)
+    }
 }
 
 

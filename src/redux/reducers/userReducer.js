@@ -1,4 +1,5 @@
-import {SET_USER, SET_AUTHENTICATED, SET_UNAUTHENTICATED, LOADING_USER, LIKE_SCREAM, UNLIKE_SCREAM} from '../types';
+import {SET_USER, SET_AUTHENTICATED, SET_UNAUTHENTICATED, LOADING_USER, LIKE_SCREAM, UNLIKE_SCREAM, MARK_NOTIFICATIONS} from '../types';
+import { CardActions } from '@material-ui/core';
 
 
 //this is the userReducer that will be hold the information in the store for the user
@@ -49,7 +50,19 @@ export default function (state = initialState,action) {
                 ...state,
                 likes :newLike
             }
+        case MARK_NOTIFICATIONS:
+            let notification = action.payload; 
 
+            if (notification.length > 1) {
+                notification = [];
+            } else {
+                notification = state.notification.filter(element => element.notificationId !== notification[0])
+            }
+            // let notification = state.notification.filter(noti=> action.payload.indexOf(noti.notificationId) == -1)
+        return {
+            ...state,
+            notification : notification
+        }
         default:
             return state;
     }

@@ -4,6 +4,7 @@ import ToolTipButton from '../../util/TooltipButton';
 import {Link} from 'react-router-dom';
 import PostIdea from '../screams/PostIdea';
 import logo from '../../images/flaticon.png';
+import Notification from './Notification';
 
 //MUI stuff
 import AppBar from '@material-ui/core/AppBar';
@@ -13,7 +14,6 @@ import withStyles from '@material-ui/core/styles/withStyles';
 import ToolTips from '@material-ui/core/Tooltip'
 //icons
 import HomeIcon from '@material-ui/icons/Home';
-import NotificationsIcon from '@material-ui/icons/Notifications';
 import KeyBoardReturn from '@material-ui/icons/KeyboardReturn';
 import AssignmentIndIcon from '@material-ui/icons/AssignmentInd';
 
@@ -74,9 +74,7 @@ const NavBar = ({user, logoutUser, classes}) => {
                 </ToolTipButton>
                 </Link>
 
-                <ToolTipButton toolTitle="Notifications">
-                    <NotificationsIcon></NotificationsIcon>
-                </ToolTipButton>
+                <Notification></Notification>
                 <ToolTipButton toolTitle={'Logout'} onClick={handleLogout}>
                     <KeyBoardReturn color="primary"/>
                 </ToolTipButton>  
