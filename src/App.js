@@ -53,7 +53,7 @@ function App() {
               <AuthRoute path="/login" component={login} />
               <AuthRoute path="/signup" component={signup} />
               <Route path="/user/:handle" component={user} exact/>
-              <Route path="/user/:handle" component={user} exact/>
+              <Route path="/user/:handle/scream/:screamId" component={user} exact/>
             </Switch>
           </div>
         </Router>

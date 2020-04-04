@@ -34,8 +34,10 @@ const Screams = (props) => {
         },
         LikeScream,
         UnLikeScream,
-        DeleteScream
+        DeleteScream,
+        screamToOpen
     } = props;
+    
     //is liked
     let screamIsLiked = likes && likes.find(like=> like.screamId === screamId);
     // is user the owner 
@@ -90,7 +92,7 @@ const Screams = (props) => {
                 <EmojiObjectsIcon/>
             </ToolTipButton>
         )
-    let menuComments = authenticated ? <Idea scream={props.scream} actionIcon={actionIcon}/>:'';
+    let menuComments = authenticated ? <Idea scream={props.scream} actionIcon={actionIcon} screamToOpen={screamToOpen}/>:'';
     return (
     
         <CardIdea 

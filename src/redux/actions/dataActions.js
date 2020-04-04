@@ -25,8 +25,6 @@ export const getUsersScreams = (handle) => async (dispatch) => {
     try {
         dispatch({type:LOADING_DATA});
         const data = await axios.get(`/user/${handle}`);
-
-        console.log(data)
         dispatch({
             type:SET_SCREAMS,
             payload: data.data.userInfo.screams

@@ -2,6 +2,7 @@ import React from 'react';
 import Proptypes from 'prop-types';
 import CardIcon from '../../util/Card';
 import CommentsGroup from './Comments';
+import {useParams, useRouteMatch} from 'react-router-dom';
 //mui
 import Button from '@material-ui/core/Button';
 import Dialog from '@material-ui/core/Dialog';
@@ -33,14 +34,19 @@ const styles = (theme) => ({
 
 const IdeaScream = (props) => {
 
-    const {scream, classes, actionIcon, getScream, data:{scream:{comments}}, UI:{loading}} = props;
+  const {scream, classes, actionIcon, getScream, data:{scream:{comments}}, UI:{loading}} = props;
+  let params = useRouteMatch();
+  let screamToOpen = params.params.screamId;
+  let autoOpen = scream.screamId === screamToOpen;
   const [open, setOpen] = React.useState(false);
-  
+
+
+// console.log([screamToOpen])
 
   const handleClickOpen = () => {
     setOpen(true);
   };
-
+  
   const handleClose = () => {
     setOpen(false);
   };
@@ -48,7 +54,6 @@ const IdeaScream = (props) => {
   const descriptionElementRef = React.useRef(null);
  
   React.useEffect(() => {
-      
     if (open) {
         getScream(scream.screamId)
 
@@ -58,6 +63,13 @@ const IdeaScream = (props) => {
       }
     }
   }, [open]);
+
+  React.useEffect(() => {
+    setOpen(autoOpen);
+  },[screamToOpen])
+
+  
+  // console.log(scream.screamId,screamToOpen,scream.screamId == screamToOpen )
 
   let loadedComments = !loading ? comments.map((comment, index) => <CommentsGroup key={index} data={comment}/> ):<CircularProgress className={classes.commentLoader}/>;
   if (!loadedComments.length && !loading) loadedComments = <CommentsGroup title='Ideally' data={{body:'Be the first one to comment on this idea'}}/>

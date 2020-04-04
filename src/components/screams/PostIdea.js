@@ -24,7 +24,6 @@ const styles = (theme) => ({
 })
 const PostIdea = (props) => {
     const {postScream} = props;
-    console.log(props)
     const postForm = async () => {
         try {
             const { value: text } = await Swal.fire({

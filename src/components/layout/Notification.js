@@ -64,12 +64,11 @@ const NotificationsGroup = (props) => {
       }
   },[notifications])
  
-console.log(notifications)
 dayjs.extend(relativeTime)
   let GroupOfNotifications = numNotifications? 
-        (notifications.map(noti => 
+        (notifications.map((noti,index) => 
         
-        <Link to={`/user/${noti.recipient}`}>
+        <Link key={index} to={`/user/${noti.recipient}/scream/${noti.screamId}`}>
             <MenuItem className={classes.menuDivider} onClick={()=>removeNotification(noti.notificationId)}>
                 {noti.type === 'comment'? 
                     ( <>
