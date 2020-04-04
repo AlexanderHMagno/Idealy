@@ -2,6 +2,7 @@ import React from 'react';
 import Proptypes from 'prop-types';
 import {Link} from 'react-router-dom';
 import dayJs from 'dayjs';
+import SkeletonProfile from '../../util/SkeletonProfile';
 
 //redux
 import {connect} from 'react-redux';
@@ -33,7 +34,7 @@ const staticProfile = (props) => {
             },
     } = props;
     
-    if (!monkeyCredentials) return <p>...loading this</p>;
+    if (!monkeyCredentials) return <SkeletonProfile/>;
     const {createdAt, location, website, handle, bio, imageUrl} = monkeyCredentials;
     if (!authenticated) {
         return (

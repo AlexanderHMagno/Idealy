@@ -2,7 +2,7 @@ import React from 'react';
 import Proptypes from 'prop-types';
 import CardIcon from '../../util/Card';
 import CommentsGroup from './Comments';
-import {useParams, useRouteMatch} from 'react-router-dom';
+import {useRouteMatch} from 'react-router-dom';
 //mui
 import Button from '@material-ui/core/Button';
 import Dialog from '@material-ui/core/Dialog';
@@ -98,13 +98,12 @@ const IdeaScream = (props) => {
         </DialogTitle>
 
         <DialogContent className={classes.dialogContent}>
-          <DialogContentText
-            id="scroll-dialog-description"
-            ref={descriptionElementRef}
-            tabIndex={-1}
-          >
-              {loadedComments}
-          </DialogContentText>
+          <div 
+          id="scroll-dialog-description"
+          ref={descriptionElementRef}
+          tabIndex={-1}>
+             {loadedComments}
+          </div>
         </DialogContent>
 
 

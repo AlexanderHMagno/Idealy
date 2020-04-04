@@ -4,6 +4,7 @@ import {Link} from 'react-router-dom';
 import dayJs from 'dayjs';
 import EditDetails from './EditDetails.js';
 import TooltipButton from '../../util/TooltipButton';
+import SkeletonProfile from '../../util/SkeletonProfile';
 
 //redux
 import {connect} from 'react-redux';
@@ -53,7 +54,7 @@ const Profile = (props) => {
         logoutUser();
     }
     
-    if (loading) return <p>...loading this</p>;
+    if (loading) return <SkeletonProfile/>;
     if (!authenticated) {
         return (
             <Paper className={classes.paper}>

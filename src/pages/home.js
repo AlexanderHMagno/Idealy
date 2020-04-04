@@ -3,6 +3,7 @@ import Grid from '@material-ui/core/Grid';
 import Screams from '../components/screams/Screams';
 import Profile from '../components/profile/Profile';
 import StatProfile from '../components/profile/staticProfile';
+import SkeletonCard from '../util/SkeletonCard';
 
 import Proptypes from 'prop-types';
 
@@ -27,7 +28,7 @@ const Home = (props) => {
     },[personal])
 
 
-    let loadedScreams = !loading ? screams.map(scream =>  <Screams key={scream.screamId} scream={scream}/> ):'loading...';
+    let loadedScreams = !loading ? screams.map(scream =>  <Screams key={scream.screamId} scream={scream}/> ):<SkeletonCard/>;
     let renderProfile = !personal || user === personal? <Profile/> : <StatProfile credentials={monkey}/>;
     return (
         

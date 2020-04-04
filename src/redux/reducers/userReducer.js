@@ -1,5 +1,5 @@
 import {SET_USER, SET_AUTHENTICATED, SET_UNAUTHENTICATED, LOADING_USER, LIKE_SCREAM, UNLIKE_SCREAM, MARK_NOTIFICATIONS} from '../types';
-import { CardActions } from '@material-ui/core';
+
 
 
 //this is the userReducer that will be hold the information in the store for the user
